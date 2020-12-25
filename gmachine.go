@@ -8,6 +8,8 @@ const DefaultMemSize = 1024
 const (
 	// HALT terminates Gmachine
 	HALT uint64 = iota
+	// NOOP does nothing
+	NOOP
 )
 
 // Gmachine represents a G-machine.
