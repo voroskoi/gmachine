@@ -15,6 +15,7 @@ const (
 // Gmachine represents a G-machine.
 type Gmachine struct {
 	P      uint64 // P is the program counter, holds the actual program number
+	A      uint64 // A is the accumulator to store the restult of last operation
 	Memory []uint64
 }
 

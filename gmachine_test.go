@@ -17,6 +17,10 @@ func TestNew(t *testing.T) {
 	if wantP != g.P {
 		t.Errorf("want initial P value %d, got %d", wantP, g.P)
 	}
+	var wantA uint64 = 0
+	if wantA != g.A {
+		t.Errorf("want initial A value %d, got %d", wantA, g.A)
+	}
 	var wantMemValue uint64 = 0
 	gotMemValue := g.Memory[gmachine.DefaultMemSize-1]
 	if wantMemValue != gotMemValue {
