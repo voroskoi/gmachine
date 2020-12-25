@@ -80,3 +80,19 @@ func Test3DEC2(t *testing.T) {
 		t.Errorf("2-3 should be 1, got %d", gm.A)
 	}
 }
+
+func TestSETA(t *testing.T) {
+	t.Parallel()
+	gm := gmachine.New()
+	gm.Memory[0] = gmachine.OpSETA
+	gm.Memory[1] = 66
+	wantA := uint64(66)
+	wantP := uint64(3) // 0: OpSETA, 1: 66, 2: actual, 3: gm.P++
+	gm.Run()
+	if gm.A != wantA {
+		t.Errorf("accumulator should be %d, got %d", wantA, gm.A)
+	}
+	if gm.P != wantP {
+		t.Errorf("program counter should be %d, got %d", wantP, gm.P)
+	}
+}

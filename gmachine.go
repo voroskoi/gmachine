@@ -14,6 +14,8 @@ const (
 	OpINCA
 	// OpDECA decrements A
 	OpDECA
+	// OpSETA set A to based on current P
+	OpSETA
 )
 
 // Gmachine represents a G-machine.
@@ -43,6 +45,9 @@ func (gm *Gmachine) Run() {
 			gm.A++
 		case OpDECA:
 			gm.A--
+		case OpSETA:
+			gm.A = gm.Memory[gm.P]
+			gm.P++
 		default:
 			// not used...
 		}
