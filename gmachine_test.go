@@ -32,8 +32,9 @@ func TestHALT(t *testing.T) {
 	t.Parallel()
 	gm := gmachine.New()
 	gm.Run()
-	if gm.P != 1 {
-		t.Errorf("program counter should be 1, got: %d", gm.P)
+	wantP := uint64(1)
+	if gm.P != wantP {
+		t.Errorf("program counter should be %d, got: %d", wantP, gm.P)
 	}
 }
 
@@ -42,8 +43,9 @@ func TestNOOP(t *testing.T) {
 	gm := gmachine.New()
 	gm.Memory[0] = gmachine.OpNOOP
 	gm.Run()
-	if gm.P != 2 {
-		t.Errorf("program counter should be 2, got: %d", gm.P)
+	wantP := uint64(2)
+	if gm.P != wantP {
+		t.Errorf("program counter should be %d, got: %d", wantP, gm.P)
 	}
 }
 
@@ -52,8 +54,9 @@ func TestINCA(t *testing.T) {
 	gm := gmachine.New()
 	gm.Memory[0] = gmachine.OpINCA
 	gm.Run()
-	if gm.A != 1 {
-		t.Errorf("accumulator should be 1, got %d", gm.A)
+	wantA := uint64(1)
+	if gm.A != wantA {
+		t.Errorf("accumulator (0++) should be %d, got %d", wantA, gm.A)
 	}
 }
 
@@ -63,8 +66,9 @@ func TestDECA(t *testing.T) {
 	gm.A = 2
 	gm.Memory[0] = gmachine.OpDECA
 	gm.Run()
+	wantA := uint64(1)
 	if gm.A != 1 {
-		t.Errorf("accumulator should be 1, got %d", gm.A)
+		t.Errorf("accumulator (2--) should be %d, got %d", wantA, gm.A)
 	}
 }
 
@@ -76,8 +80,9 @@ func Test3DEC2(t *testing.T) {
 		gm.Memory[i] = gmachine.OpDECA
 	}
 	gm.Run()
-	if gm.A != 1 {
-		t.Errorf("2-3 should be 1, got %d", gm.A)
+	wantA := uint64(1)
+	if gm.A != wantA {
+		t.Errorf("2-3 should be %d, got %d", wantA, gm.A)
 	}
 }
 
