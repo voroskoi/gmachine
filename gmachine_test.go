@@ -67,3 +67,16 @@ func TestDECA(t *testing.T) {
 		t.Errorf("accumulator should be 1, got %d", gm.A)
 	}
 }
+
+func Test3DEC2(t *testing.T) {
+	t.Parallel()
+	gm := gmachine.New()
+	gm.A = 3
+	for i := 0; i < 2; i++ {
+		gm.Memory[i] = gmachine.OpDECA
+	}
+	gm.Run()
+	if gm.A != 1 {
+		t.Errorf("2-3 should be 1, got %d", gm.A)
+	}
+}
