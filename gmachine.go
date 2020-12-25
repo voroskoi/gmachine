@@ -6,10 +6,10 @@ package gmachine
 const DefaultMemSize = 1024
 
 const (
-	// HALT terminates Gmachine
-	HALT uint64 = iota
-	// NOOP does nothing
-	NOOP
+	// OpHALT terminates Gmachine
+	OpHALT uint64 = iota
+	// OpNOOP does nothing
+	OpNOOP
 )
 
 // Gmachine represents a G-machine.
@@ -30,9 +30,12 @@ func (gm *Gmachine) Run() {
 	for gm.P < DefaultMemSize {
 		gm.P++
 		switch gm.Memory[gm.P-1] {
-		case HALT:
+		case OpHALT:
 			return
+		case OpNOOP:
+			// do nothing
 		default:
+			// not used...
 		}
 	}
 }

@@ -36,7 +36,7 @@ func TestHALT(t *testing.T) {
 func TestNOOP(t *testing.T) {
 	t.Parallel()
 	gm := gmachine.New()
-	gm.Memory[0] = gmachine.NOOP
+	gm.Memory[0] = gmachine.OpNOOP
 	gm.Run()
 	if gm.P != 2 {
 		t.Errorf("program counter should be 2, got: %d", gm.P)
