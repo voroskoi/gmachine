@@ -23,3 +23,11 @@ func TestNew(t *testing.T) {
 		t.Errorf("want last memory location to contain %d, got %d", wantMemValue, gotMemValue)
 	}
 }
+
+func TestHALT(t *testing.T) {
+	gm := gmachine.New()
+	gm.Run()
+	if gm.P != 1 {
+		t.Errorf("program couter should be 1, got: %d", gm.P)
+	}
+}
