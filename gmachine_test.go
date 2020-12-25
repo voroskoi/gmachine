@@ -46,3 +46,24 @@ func TestNOOP(t *testing.T) {
 		t.Errorf("program counter should be 2, got: %d", gm.P)
 	}
 }
+
+func TestINCA(t *testing.T) {
+	t.Parallel()
+	gm := gmachine.New()
+	gm.Memory[0] = gmachine.OpINCA
+	gm.Run()
+	if gm.A != 1 {
+		t.Errorf("accumulator should be 1, got %d", gm.A)
+	}
+}
+
+func TestDECA(t *testing.T) {
+	t.Parallel()
+	gm := gmachine.New()
+	gm.A = 2
+	gm.Memory[0] = gmachine.OpDECA
+	gm.Run()
+	if gm.A != 1 {
+		t.Errorf("accumulator should be 1, got %d", gm.A)
+	}
+}

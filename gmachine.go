@@ -10,6 +10,10 @@ const (
 	OpHALT uint64 = iota
 	// OpNOOP does nothing
 	OpNOOP
+	// OpINCA increments A
+	OpINCA
+	// OpDECA decrements A
+	OpDECA
 )
 
 // Gmachine represents a G-machine.
@@ -35,6 +39,10 @@ func (gm *Gmachine) Run() {
 			return
 		case OpNOOP:
 			// do nothing
+		case OpINCA:
+			gm.A++
+		case OpDECA:
+			gm.A--
 		default:
 			// not used...
 		}
