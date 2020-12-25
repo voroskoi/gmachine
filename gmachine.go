@@ -1,10 +1,6 @@
 // Package gmachine implements a simple virtual CPU, known as the G-machine.
 package gmachine
 
-import (
-	"os"
-)
-
 // DefaultMemSize is the number of 64-bit words of memory which will be
 // allocated to a new G-machine by default.
 const DefaultMemSize = 1024
@@ -33,7 +29,7 @@ func (gm *Gmachine) Run() {
 		gm.P++
 		switch gm.Memory[gm.P-1] {
 		case HALT:
-			os.Exit(0)
+			return
 		default:
 		}
 	}
