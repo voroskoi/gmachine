@@ -54,8 +54,9 @@ func TestNOOP(t *testing.T) {
 func TestINCA(t *testing.T) {
 	t.Parallel()
 	gm := gmachine.New()
-	gm.Memory[0] = gmachine.OpINCA
-	gm.Run()
+	gm.RunProgram([]uint64{
+		gmachine.OpINCA,
+	})
 	wantA := uint64(1)
 	if gm.A != wantA {
 		t.Errorf("accumulator (0++) should be %d, got %d", wantA, gm.A)
@@ -66,36 +67,24 @@ func TestDECA(t *testing.T) {
 	t.Parallel()
 	gm := gmachine.New()
 	gm.A = 2
-	gm.Memory[0] = gmachine.OpDECA
-	gm.Run()
+	gm.RunProgram([]uint64{
+		gmachine.OpDECA,
+	})
 	wantA := uint64(1)
 	if gm.A != 1 {
 		t.Errorf("accumulator (2--) should be %d, got %d", wantA, gm.A)
 	}
 }
 
-func Test3DEC2(t *testing.T) {
-	t.Parallel()
-	gm := gmachine.New()
-	gm.A = 3
-	for i := 0; i < 2; i++ {
-		gm.Memory[i] = gmachine.OpDECA
-	}
-	gm.Run()
-	wantA := uint64(1)
-	if gm.A != wantA {
-		t.Errorf("2-3 should be %d, got %d", wantA, gm.A)
-	}
-}
-
 func TestSETA(t *testing.T) {
 	t.Parallel()
 	gm := gmachine.New()
-	gm.Memory[0] = gmachine.OpSETA
-	gm.Memory[1] = 66
+	gm.RunProgram([]uint64{
+		gmachine.OpSETA,
+		66,
+	})
 	wantA := uint64(66)
 	wantP := uint64(3) // 0: OpSETA, 1: 66, 2: actual, 3: gm.P++
-	gm.Run()
 	if gm.A != wantA {
 		t.Errorf("accumulator should be %d, got %d", wantA, gm.A)
 	}
@@ -117,11 +106,12 @@ func TestSubtract(t *testing.T) {
 	t.Parallel()
 	gm := gmachine.New()
 	for _, tc := range subtractTestcases {
-		gm.Memory[0] = gmachine.OpSETA
-		gm.Memory[1] = tc.base
-		gm.Memory[2] = gmachine.OpDECA
-		gm.Memory[3] = gmachine.OpDECA
-		gm.Run()
+		gm.RunProgram([]uint64{
+			gmachine.OpSETA,
+			tc.base,
+			gmachine.OpDECA,
+			gmachine.OpDECA,
+		})
 		wantA := tc.want
 		if gm.A != wantA {
 			t.Errorf("Substraction result should be %d, got %d", gm.A, wantA)
