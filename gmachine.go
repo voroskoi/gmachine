@@ -53,3 +53,11 @@ func (gm *Gmachine) Run() {
 		}
 	}
 }
+
+// RunProgram loads the program to Gmachine memory, then starts it by calling Run().
+func (gm *Gmachine) RunProgram(mem []uint64) {
+	for k, v := range mem {
+		gm.Memory[k] = v
+	}
+	gm.Run()
+}
