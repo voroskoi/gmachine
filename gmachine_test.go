@@ -102,16 +102,28 @@ func TestSETA(t *testing.T) {
 	}
 }
 
-func TestSubt32(t *testing.T) {
+var subtractTestcases = []struct {
+	base uint64
+	want uint64
+}{
+	{2, 0},
+	{5, 3},
+	{7, 5},
+}
+
+func TestSubtract(t *testing.T) {
 	t.Parallel()
 	gm := gmachine.New()
-	gm.Memory[0] = gmachine.OpSETA
-	gm.Memory[1] = 3
-	gm.Memory[2] = gmachine.OpDECA
-	gm.Memory[3] = gmachine.OpDECA
-	gm.Run()
-	wantA := uint64(1)
-	if gm.A != wantA {
-		t.Errorf("OpSETA 3; OpDECA, OpDECA should be %d, got %d", wantA, gm.A)
+	for _, tc := range subtractTestcases {
+		gm.Memory[0] = gmachine.OpSETA
+		gm.Memory[1] = tc.base
+		gm.Memory[2] = gmachine.OpDECA
+		gm.Memory[3] = gmachine.OpDECA
+		gm.Run()
+		wantA := tc.want
+		if gm.A != wantA {
+			t.Errorf("Substraction result should be %d, got %d", gm.A, wantA)
+		}
+		gm.P = 0
 	}
 }
